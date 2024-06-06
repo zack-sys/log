@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/sirupsen/logrus v1.9.3
-	go.uber.org/zap v1.27.0
+	go.uber.org/zap v1.25.0
 )
 
 require (

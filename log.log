@@ -1,0 +1,7 @@
+{"level":"INFO","generated_time":"2024-06-06T15:29:22.635+08:00","caller":"log/log_cache_test.go:42","msg":"syslog info","@fluentd_tag":"chat-cache-test"}
+{"level":"INFO","generated_time":"2024-06-06T15:29:23.649+08:00","caller":"log/log_cache_test.go:42","msg":"syslog info","@fluentd_tag":"chat-cache-test"}
+{"level":"INFO","generated_time":"2024-06-06T15:29:24.659+08:00","caller":"log/log_cache_test.go:42","msg":"syslog info","@fluentd_tag":"chat-cache-test"}
+{"level":"INFO","generated_time":"2024-06-06T15:29:25.666+08:00","caller":"log/log_cache_test.go:42","msg":"syslog info","@fluentd_tag":"chat-cache-test"}
+{"level":"INFO","generated_time":"2024-06-06T15:29:26.674+08:00","caller":"log/log_cache_test.go:42","msg":"syslog info","@fluentd_tag":"chat-cache-test"}
+{"level":"INFO","generated_time":"2024-06-06T15:29:27.678+08:00","caller":"log/log_cache_test.go:42","msg":"syslog info","@fluentd_tag":"chat-cache-test"}
+{"level":"INFO","generated_time":"2024-06-06T15:29:28.686+08:00","caller":"log/log_cache_test.go:42","msg":"syslog info","@fluentd_tag":"chat-cache-test"}

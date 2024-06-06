@@ -1,4 +1,4 @@
-module testlog
+module github.com/zack-sys/log
 
 go 1.18
 

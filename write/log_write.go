@@ -1,8 +1,8 @@
 package write
 
 import (
+	"github.com/zack-sys/log/queue"
 	"os"
-	"testlog/queue"
 )
 
 type Log struct {

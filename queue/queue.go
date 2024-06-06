@@ -3,8 +3,8 @@ package queue
 import (
 	"context"
 	"fmt"
-	"testlog/enum"
-	"testlog/es"
+	"github.com/zack-sys/log/enum"
+	"github.com/zack-sys/log/es"
 	"time"
 )
 

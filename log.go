@@ -3,13 +3,13 @@ package log
 import (
 	"context"
 	log "github.com/sirupsen/logrus"
+	"github.com/zack-sys/log/enum"
+	"github.com/zack-sys/log/es"
+	"github.com/zack-sys/log/util"
+	"github.com/zack-sys/log/write"
 	"go.uber.org/zap/zapcore"
 	"os"
 	"runtime"
-	"testlog/enum"
-	"testlog/es"
-	"testlog/util"
-	"testlog/write"
 )
 
 var index string

@@ -10,7 +10,6 @@ import (
 	"go.uber.org/zap/zapcore"
 	"os"
 	"runtime"
-	"time"
 )
 
 var index string
@@ -39,7 +38,7 @@ func getBasicFields(ctx context.Context) log.Fields {
 
 	basicfields := log.Fields{
 		"caller":       zapcore.NewEntryCaller(runtime.Caller(skipCall)).TrimmedPath(),
-		"@fluentd_tag": index + "-" + time.Now().Format("2006-01-02"),
+		"@fluentd_tag": util.GetIndex(index),
 		"Trace_Id":     util.GetString(ctx.Value(enum.TraceId)),
 	}
 	return basicfields

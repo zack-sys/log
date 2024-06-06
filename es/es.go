@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/olivere/elastic/v7"
 	"github.com/olivere/elastic/v7/config"
+	"github.com/zack-sys/log/util"
 )
 
 var (
@@ -68,7 +69,7 @@ func PushEs(ctx context.Context, buffer [][]byte) (err error) {
 		bulk = bulk.Add(req)
 	}
 
-	_, err = bulk.Index(index).Type("_doc").Do(ctx)
+	_, err = bulk.Index(util.GetIndex(index)).Type("_doc").Do(ctx)
 	if err != nil {
 		return err
 	}

@@ -18,7 +18,6 @@ var skipCall int
 
 func init() {
 	log.SetFormatter(&log.JSONFormatter{})
-	log.SetOutput(os.Stdout)
 	log.SetOutput(write.NewLog())
 	log.SetLevel(log.InfoLevel)
 	skipCall = 2
@@ -26,6 +25,9 @@ func init() {
 func SetIndex(i string) {
 	index = i
 	es.SetEsIndex(i)
+}
+func SetConsolePrint(flag bool) {
+	log.SetOutput(write.NewLogCfg(&write.Log{Console: flag}))
 }
 
 func SkipCall(skip int) {

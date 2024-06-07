@@ -37,10 +37,15 @@ func getBasicFields(ctx context.Context) log.Fields {
 		panic("索引不能为空")
 	}
 
+	hostname, _ := os.Hostname()
 	basicfields := log.Fields{
 		"caller":       zapcore.NewEntryCaller(runtime.Caller(skipCall)).TrimmedPath(),
 		"@fluentd_tag": util.GetIndex(index),
 		"Trace_Id":     util.GetString(ctx.Value(enum.TraceId)),
+		"os":           runtime.GOOS,
+		"hostname":     hostname,
+		"pid":          os.Getpid(),
+		"server_host":  util.GetUseIp(),
 	}
 	return basicfields
 }

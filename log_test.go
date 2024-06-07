@@ -11,9 +11,9 @@ import (
 
 func TestInfo(t *testing.T) {
 	SetIndex("test")
-	es.InitEsClient("http://127.0.0.1:9200")
+	es.InitEsClient("", "", "")
 	for {
-		for i := 0; i < 500; i++ {
+		for i := 0; i < 10; i++ {
 			Info(context.Background(),
 				fmt.Sprint("你好", i),
 				logrus.Fields{

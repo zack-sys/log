@@ -18,7 +18,7 @@ func SetEsIndex(i string) {
 	index = i
 }
 
-func InitEsClient(host string) {
+func InitEsClient(host string, name, pass string) {
 	if host == "" {
 		fmt.Println("es host is empty")
 		return
@@ -26,8 +26,10 @@ func InitEsClient(host string) {
 	// 创建es连接
 	var sniff = false
 	cfg := &config.Config{
-		URL:   host,
-		Sniff: &sniff,
+		URL:      host,
+		Username: name,
+		Password: pass,
+		Sniff:    &sniff,
 	}
 	var err error
 	defaultEsClient, err = elastic.NewClientFromConfig(cfg)

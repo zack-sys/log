@@ -50,3 +50,45 @@ func Info(ctx context.Context, msg string, ext ...log.Fields) {
 	}
 	entry.Info(msg)
 }
+func Trace(ctx context.Context, msg string, ext ...log.Fields) {
+	entry := log.WithFields(getBasicFields(ctx))
+	for _, v := range ext {
+		entry = entry.WithFields(v)
+	}
+	entry.Trace(msg)
+}
+func Debug(ctx context.Context, msg string, ext ...log.Fields) {
+	entry := log.WithFields(getBasicFields(ctx))
+	for _, v := range ext {
+		entry = entry.WithFields(v)
+	}
+	entry.Debug(msg)
+}
+func Warn(ctx context.Context, msg string, ext ...log.Fields) {
+	entry := log.WithFields(getBasicFields(ctx))
+	for _, v := range ext {
+		entry = entry.WithFields(v)
+	}
+	entry.Warn(msg)
+}
+func Error(ctx context.Context, msg string, ext ...log.Fields) {
+	entry := log.WithFields(getBasicFields(ctx))
+	for _, v := range ext {
+		entry = entry.WithFields(v)
+	}
+	entry.Error(msg)
+}
+func Fatal(ctx context.Context, msg string, ext ...log.Fields) {
+	entry := log.WithFields(getBasicFields(ctx))
+	for _, v := range ext {
+		entry = entry.WithFields(v)
+	}
+	entry.Fatal(msg)
+}
+func Panic(ctx context.Context, msg string, ext ...log.Fields) {
+	entry := log.WithFields(getBasicFields(ctx))
+	for _, v := range ext {
+		entry = entry.WithFields(v)
+	}
+	entry.Panic(msg)
+}

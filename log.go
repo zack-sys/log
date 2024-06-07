@@ -2,6 +2,7 @@ package log
 
 import (
 	"context"
+	uuid "github.com/satori/go.uuid"
 	log "github.com/sirupsen/logrus"
 	"github.com/zack-sys/log/enum"
 	"github.com/zack-sys/log/es"
@@ -91,4 +92,10 @@ func Panic(ctx context.Context, msg string, ext ...log.Fields) {
 		entry = entry.WithFields(v)
 	}
 	entry.Panic(msg)
+}
+
+func NewContext() context.Context {
+	ctx := context.Background()
+	context.WithValue(ctx, enum.TraceId, uuid.NewV4().String())
+	return ctx
 }

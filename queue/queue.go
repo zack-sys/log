@@ -34,7 +34,7 @@ func Consumption() {
 			go func() {
 				err := es.PushEs(context.Background(), temp)
 				if err != nil {
-					fmt.Println("es.PushEs err:", err)
+					fmt.Println("es.PushEs err:", err, "len:", len(temp))
 				}
 			}()
 			msgQueue = make([][]byte, 0)
@@ -47,7 +47,7 @@ func Consumption() {
 				go func() {
 					err := es.PushEs(context.Background(), temp)
 					if err != nil {
-						fmt.Println("es.PushEs err:", err)
+						fmt.Println("es.PushEs err:", err, "len:", len(temp))
 					}
 				}()
 				msgQueue = make([][]byte, 0)

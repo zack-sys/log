@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/zack-sys/log/enum"
 	"github.com/zack-sys/log/es"
+	"sync"
 	"time"
 )
 
@@ -22,6 +23,7 @@ func Consumption() {
 	timer := time.Tick(time.Duration(enum.MsgTimeOut) * time.Second)
 
 	msgQueue := make([][]byte, 0)
+	lock := sync.Mutex{}
 	for {
 		select {
 		case <-timer:
@@ -29,6 +31,7 @@ func Consumption() {
 			if len(msgQueue) == 0 {
 				continue
 			}
+			lock.Lock()
 			temp := make([][]byte, len(msgQueue))
 			copy(temp, msgQueue)
 			go func() {
@@ -38,7 +41,9 @@ func Consumption() {
 				}
 			}()
 			msgQueue = make([][]byte, 0)
+			lock.Unlock()
 		case msg := <-msgChannel:
+			lock.Lock()
 			msgQueue = append(msgQueue, msg)
 			if len(msgQueue) >= enum.MsgLen {
 				// 数据写入es
@@ -51,6 +56,7 @@ func Consumption() {
 					}
 				}()
 				msgQueue = make([][]byte, 0)
+				lock.Unlock()
 			}
 		}
 	}

@@ -56,8 +56,8 @@ func Consumption() {
 					}
 				}()
 				msgQueue = make([][]byte, 0)
-				lock.Unlock()
 			}
+			lock.Unlock()
 		}
 	}
 }

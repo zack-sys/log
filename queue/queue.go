@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/zack-sys/log/enum"
 	"github.com/zack-sys/log/es"
+	"github.com/zack-sys/log/util"
 	"sync"
 	"time"
 )
@@ -33,7 +34,7 @@ func Consumption() {
 			}
 			lock.Lock()
 			temp := make([][]byte, len(msgQueue))
-			copy(temp, msgQueue)
+			util.DeepCopy(temp, msgQueue)
 			go func() {
 				err := es.PushEs(context.Background(), temp)
 				if err != nil {
@@ -48,7 +49,7 @@ func Consumption() {
 			if len(msgQueue) >= enum.MsgLen {
 				// 数据写入es
 				temp := make([][]byte, len(msgQueue))
-				copy(temp, msgQueue)
+				util.DeepCopy(temp, msgQueue)
 				go func() {
 					err := es.PushEs(context.Background(), temp)
 					if err != nil {

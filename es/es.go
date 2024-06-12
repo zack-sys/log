@@ -40,7 +40,7 @@ func InitEsClient(host string, name, pass string) {
 }
 
 // es数据推送
-func PushEs(ctx context.Context, buffer [][]byte) (err error) {
+func PushEs(ctx context.Context, buffer []string) (err error) {
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println("es client panic err:", err)
@@ -58,13 +58,15 @@ func PushEs(ctx context.Context, buffer [][]byte) (err error) {
 			continue
 		}
 		var a map[string]interface{}
-		err := json.Unmarshal(v, &a)
+		err := json.Unmarshal([]byte(v), &a)
 		if err != nil {
-			return err
+			fmt.Println("es bulk unmarshal err:", err.Error())
+			continue
 		}
 		result, err := json.Marshal(a)
 		if err != nil {
-			return err
+			fmt.Println("es bulk Marshal err:", err.Error())
+			continue
 		}
 
 		req := elastic.NewBulkIndexRequest().Doc(string(result))

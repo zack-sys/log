@@ -10,21 +10,21 @@ import (
 	"time"
 )
 
-var msgChannel chan []byte
+var msgChannel chan string
 
 func init() {
-	msgChannel = make(chan []byte, enum.QueueLen)
+	msgChannel = make(chan string, enum.QueueLen)
 	go Consumption()
 }
-func Push(msg []byte) {
+func Push(msg string) {
 	msgChannel <- msg
 }
 
 func Consumption() {
 	timer := time.Tick(time.Duration(enum.MsgTimeOut) * time.Second)
 
-	msgQueue := make([][]byte, 0)
-	lock := sync.Mutex{}
+	msgQueue := make([]string, 0)
+	lock := sync.RWMutex{}
 	for {
 		select {
 		case <-timer:
@@ -33,30 +33,33 @@ func Consumption() {
 				continue
 			}
 			lock.Lock()
-			temp := make([][]byte, len(msgQueue))
-			util.DeepCopy(&temp, msgQueue)
+			temp := make([]string, len(msgQueue))
+			util.DeepCopyJson(&temp, msgQueue)
+			msgQueue = make([]string, 0)
+			lock.Unlock()
+
 			go func() {
 				err := es.PushEs(context.Background(), temp)
 				if err != nil {
 					fmt.Println("es.PushEs err:", err, "len:", len(temp))
 				}
 			}()
-			msgQueue = make([][]byte, 0)
-			lock.Unlock()
 		case msg := <-msgChannel:
 			lock.Lock()
 			msgQueue = append(msgQueue, msg)
+
 			if len(msgQueue) >= enum.MsgLen {
 				// 数据写入es
-				temp := make([][]byte, len(msgQueue))
-				util.DeepCopy(&temp, msgQueue)
+				temp := make([]string, len(msgQueue))
+				util.DeepCopyJson(&temp, msgQueue)
+				msgQueue = make([]string, 0)
+
 				go func() {
 					err := es.PushEs(context.Background(), temp)
 					if err != nil {
 						fmt.Println("es.PushEs err:", err, "len:", len(temp))
 					}
 				}()
-				msgQueue = make([][]byte, 0)
 			}
 			lock.Unlock()
 		}

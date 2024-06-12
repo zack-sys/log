@@ -18,7 +18,7 @@ func NewLogCfg(l *Log) *Log {
 }
 
 func (l Log) Write(p []byte) (n int, err error) {
-	go queue.Push(p)
+	go queue.Push(string(p))
 	if !l.Console {
 		return 0, nil
 	}

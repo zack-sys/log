@@ -3,6 +3,7 @@ package util
 import (
 	"bytes"
 	"encoding/gob"
+	"encoding/json"
 	"net"
 	"strings"
 	"time"
@@ -35,4 +36,15 @@ func DeepCopy(dst, src interface{}) error {
 		return err
 	}
 	return gob.NewDecoder(bytes.NewBuffer(buf.Bytes())).Decode(dst)
+}
+func DeepCopyJson(dst, src interface{}) error {
+	marshal, err := json.Marshal(src)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(marshal, dst)
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -34,7 +34,7 @@ func Consumption() {
 			}
 			lock.Lock()
 			temp := make([][]byte, len(msgQueue))
-			util.DeepCopy(temp, msgQueue)
+			util.DeepCopy(&temp, msgQueue)
 			go func() {
 				err := es.PushEs(context.Background(), temp)
 				if err != nil {
@@ -49,7 +49,7 @@ func Consumption() {
 			if len(msgQueue) >= enum.MsgLen {
 				// 数据写入es
 				temp := make([][]byte, len(msgQueue))
-				util.DeepCopy(temp, msgQueue)
+				util.DeepCopy(&temp, msgQueue)
 				go func() {
 					err := es.PushEs(context.Background(), temp)
 					if err != nil {

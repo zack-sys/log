@@ -18,7 +18,7 @@ func TestInfo(t *testing.T) {
 				fmt.Sprint("你好", i),
 				logrus.Fields{
 					"user":   "dddd",
-					"user33": "ddd123d",
+					"user33": "ddd12133a啊啊1ddd,3d",
 				},
 			)
 		}

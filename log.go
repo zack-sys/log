@@ -12,6 +12,7 @@ import (
 	"go.uber.org/zap/zapcore"
 	"os"
 	"runtime"
+	"strings"
 )
 
 var index string
@@ -60,7 +61,7 @@ func PreSend(ctx context.Context, ext ...log.Fields) *log.Entry {
 	marshal, _ := json.Marshal(entry.Data)
 
 	entry = entry.WithFields(log.Fields{
-		"size": len(marshal),
+		"size": len(strings.Split(string(marshal), "")),
 	})
 	return entry
 }

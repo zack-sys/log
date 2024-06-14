@@ -60,7 +60,7 @@ func PreSend(ctx context.Context, ext ...log.Fields) *log.Entry {
 	marshal, _ := json.Marshal(entry.Data)
 
 	entry = entry.WithFields(log.Fields{
-		"size": len(marshal),
+		"log_size": len(marshal),
 	})
 	return entry
 }

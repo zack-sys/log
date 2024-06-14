@@ -5,4 +5,5 @@ const (
 	MsgLen     = 100
 	MsgTimeOut = 3
 	TraceId    = "Trace_Id"
+	FileSize   = 500
 )

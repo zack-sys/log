@@ -13,13 +13,16 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"time"
 )
 
 var index string
 var skipCall int
 
 func init() {
-	log.SetFormatter(&log.JSONFormatter{})
+	log.SetFormatter(&log.JSONFormatter{
+		TimestampFormat: "2006-01-02T15:04:05.000Z07:00",
+	})
 	log.SetOutput(write.NewLog())
 	log.SetLevel(log.InfoLevel)
 	skipCall = 2
@@ -50,6 +53,7 @@ func getBasicFields(ctx context.Context) log.Fields {
 		"hostname":     hostname,
 		"pid":          os.Getpid(),
 		"server_host":  util.GetUseIp(),
+		"timestamp":    time.Now().UnixMilli(),
 	}
 	return basicfields
 }

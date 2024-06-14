@@ -2,6 +2,7 @@ package log
 
 import (
 	"context"
+	"encoding/json"
 	uuid "github.com/satori/go.uuid"
 	log "github.com/sirupsen/logrus"
 	"github.com/zack-sys/log/enum"
@@ -51,53 +52,44 @@ func getBasicFields(ctx context.Context) log.Fields {
 	}
 	return basicfields
 }
-func Info(ctx context.Context, msg string, ext ...log.Fields) {
+func PreSend(ctx context.Context, ext ...log.Fields) *log.Entry {
 	entry := log.WithFields(getBasicFields(ctx))
 	for _, v := range ext {
 		entry = entry.WithFields(v)
 	}
+	marshal, _ := json.Marshal(entry.Data)
+
+	entry = entry.WithFields(log.Fields{
+		"size": len(marshal),
+	})
+	return entry
+}
+func Info(ctx context.Context, msg string, ext ...log.Fields) {
+	entry := PreSend(ctx, ext...)
 	entry.Info(msg)
 }
 func Trace(ctx context.Context, msg string, ext ...log.Fields) {
-	entry := log.WithFields(getBasicFields(ctx))
-	for _, v := range ext {
-		entry = entry.WithFields(v)
-	}
+	entry := PreSend(ctx, ext...)
 	entry.Trace(msg)
 }
 func Debug(ctx context.Context, msg string, ext ...log.Fields) {
-	entry := log.WithFields(getBasicFields(ctx))
-	for _, v := range ext {
-		entry = entry.WithFields(v)
-	}
+	entry := PreSend(ctx, ext...)
 	entry.Debug(msg)
 }
 func Warn(ctx context.Context, msg string, ext ...log.Fields) {
-	entry := log.WithFields(getBasicFields(ctx))
-	for _, v := range ext {
-		entry = entry.WithFields(v)
-	}
+	entry := PreSend(ctx, ext...)
 	entry.Warn(msg)
 }
 func Error(ctx context.Context, msg string, ext ...log.Fields) {
-	entry := log.WithFields(getBasicFields(ctx))
-	for _, v := range ext {
-		entry = entry.WithFields(v)
-	}
+	entry := PreSend(ctx, ext...)
 	entry.Error(msg)
 }
 func Fatal(ctx context.Context, msg string, ext ...log.Fields) {
-	entry := log.WithFields(getBasicFields(ctx))
-	for _, v := range ext {
-		entry = entry.WithFields(v)
-	}
+	entry := PreSend(ctx, ext...)
 	entry.Fatal(msg)
 }
 func Panic(ctx context.Context, msg string, ext ...log.Fields) {
-	entry := log.WithFields(getBasicFields(ctx))
-	for _, v := range ext {
-		entry = entry.WithFields(v)
-	}
+	entry := PreSend(ctx, ext...)
 	entry.Panic(msg)
 }
 

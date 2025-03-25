@@ -31,7 +31,11 @@ func GetUseIp() string {
 }
 
 func DeepCopy(dst, src interface{}) error {
-	return src
+	var buf bytes.Buffer
+	if err := gob.NewEncoder(&buf).Encode(src); err != nil {
+		return err
+	}
+	return gob.NewDecoder(bytes.NewBuffer(buf.Bytes())).Decode(dst)
 }
 func DeepCopyJson(dst, src interface{}) error {
 	marshal, err := json.Marshal(src)

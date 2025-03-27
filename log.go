@@ -18,6 +18,7 @@ import (
 
 var index string
 var skipCall int
+var nowIp string
 
 func init() {
 	log.SetFormatter(&log.JSONFormatter{
@@ -26,6 +27,7 @@ func init() {
 	log.SetOutput(write.NewLog())
 	log.SetLevel(log.InfoLevel)
 	skipCall = 2
+	nowIp = util.GetUseIp()
 }
 func SetIndex(i string) {
 	index = i
@@ -37,6 +39,9 @@ func SetConsolePrint(flag bool) {
 
 func SkipCall(skip int) {
 	skipCall = skip
+}
+func SetLogUseIp(ip string) {
+	nowIp = ip
 }
 
 func getBasicFields(ctx context.Context) log.Fields {
@@ -52,7 +57,7 @@ func getBasicFields(ctx context.Context) log.Fields {
 		"os":           runtime.GOOS,
 		"hostname":     hostname,
 		"pid":          os.Getpid(),
-		"server_host":  util.GetUseIp(),
+		"server_host":  nowIp,
 		"timestamp":    time.Now().UnixMilli(),
 	}
 	return basicfields

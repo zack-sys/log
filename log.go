@@ -19,6 +19,7 @@ import (
 var index string
 var skipCall int
 var nowIp string
+var extField map[string]interface{}
 
 func init() {
 	log.SetFormatter(&log.JSONFormatter{
@@ -28,10 +29,14 @@ func init() {
 	log.SetLevel(log.InfoLevel)
 	skipCall = 2
 	nowIp = util.GetUseIp()
+	extField = make(map[string]interface{})
 }
 func SetIndex(i string) {
 	index = i
 	es.SetEsIndex(i)
+}
+func SetExtField(ext map[string]interface{}) {
+	extField = ext
 }
 func SetConsolePrint(flag bool) {
 	log.SetOutput(write.NewLogCfg(&write.Log{Console: flag}))
@@ -59,6 +64,9 @@ func getBasicFields(ctx context.Context) log.Fields {
 		"pid":          os.Getpid(),
 		"server_host":  nowIp,
 		"timestamp":    time.Now().UnixMilli(),
+	}
+	for k, v := range extField {
+		basicfields[k] = v
 	}
 	return basicfields
 }
